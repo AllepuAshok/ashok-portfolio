@@ -7,6 +7,7 @@ import Skills from "./sections/Skills";
 import Projects from "./sections/Projects";
 import Experience from "./sections/Experience";
 import Contact from "./sections/Contact";
+import BackToTop from "./components/BackToTop";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
 
         <div id="contact">
           <Contact />
+          <BackToTop />
         </div>
       </main>
     </div>
