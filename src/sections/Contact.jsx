@@ -192,28 +192,7 @@ function Contact() {
 
         </motion.div>
 
-        {/* Footer */}
-        <div className="mt-20 border-t border-[#1d2926] pt-8">
-
-          <div className="flex flex-col justify-between gap-5 text-sm text-gray-600 md:flex-row md:items-center">
-
-            <div>
-              © {new Date().getFullYear()}{" "}
-              <span className="font-semibold text-gray-400">
-                Ashok Allepu
-              </span>
-              . All rights reserved.
-            </div>
-
-            <div className="flex items-center gap-2">
-              Designed & Built with
-              <span className="text-[#00c896]">♥</span>
-              using React
-            </div>
-
-          </div>
-
-        </div>
+       
 
       </div>
     </section>

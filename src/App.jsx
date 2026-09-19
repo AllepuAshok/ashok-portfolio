@@ -8,7 +8,9 @@ import Projects from "./sections/Projects";
 import Experience from "./sections/Experience";
 import Contact from "./sections/Contact";
 import BackToTop from "./components/BackToTop";
-
+import CustomCursor from "./components/CustomCursor";
+import Footer from "./components/Footer";
+import LoadingScreen from "./components/LoadingScreen";
 function App() {
   return (
     <div className="min-h-screen bg-[#050505] text-white">
@@ -39,6 +41,9 @@ function App() {
         <div id="contact">
           <Contact />
           <BackToTop />
+          <CustomCursor />
+          <Footer />
+          <LoadingScreen />
         </div>
       </main>
     </div>

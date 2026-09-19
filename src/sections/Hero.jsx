@@ -1,24 +1,71 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-const roles = [
-  "Developer",
-  "Java & DSA Learner",
-  "AI/ML Enthusiast",
-  "Web Developer",
+const typingTexts = [
+  "Building Better Solutions",
+  "Learning Java & DSA",
+  "Exploring AI/ML",
+  "Creating Modern Web Apps",
 ];
 
-function Hero() {
-  const [roleIndex, setRoleIndex] = useState(0);
+function TypingText() {
+  const [text, setText] = useState("");
+  const [textIndex, setTextIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setRoleIndex((current) => (current + 1) % roles.length);
-    }, 2000);
+    const currentText = typingTexts[textIndex];
 
-    return () => clearInterval(interval);
-  }, []);
+    let speed = isDeleting ? 45 : 90;
 
+    if (!isDeleting && text === currentText) {
+      speed = 2000;
+    }
+
+    const timer = setTimeout(() => {
+      if (!isDeleting) {
+        const nextText = currentText.substring(0, text.length + 1);
+        setText(nextText);
+
+        if (nextText === currentText) {
+          setIsDeleting(true);
+        }
+      } else {
+        const nextText = currentText.substring(0, text.length - 1);
+        setText(nextText);
+
+        if (nextText === "") {
+          setIsDeleting(false);
+          setTextIndex(
+            (current) => (current + 1) % typingTexts.length
+          );
+        }
+      }
+    }, speed);
+
+    return () => clearTimeout(timer);
+  }, [text, textIndex, isDeleting]);
+
+  return (
+    <div className="flex min-h-[42px] items-center text-xl font-bold md:text-2xl">
+      <span className="font-mono text-[#00c896]">
+        &gt; {text}
+      </span>
+
+      <motion.span
+        animate={{ opacity: [1, 0, 1] }}
+        transition={{
+          duration: 0.8,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+        className="ml-1 inline-block h-6 w-[3px] bg-[#00c896] md:h-7"
+      />
+    </div>
+  );
+}
+
+function Hero() {
   return (
     <section
       id="home"
@@ -67,29 +114,22 @@ function Hero() {
             <span className="text-[#00c896]">.</span>
           </h1>
 
-          {/* Animated role */}
-          <div className="mt-8 flex min-h-[42px] flex-wrap items-center gap-2 text-xl font-bold md:text-2xl">
-            <span className="text-gray-300">B.Tech CSM Student</span>
+          {/* Typing cursor animation */}
+          <div className="mt-8">
+            <div className="mb-2 text-xl font-bold md:text-2xl">
+              <span className="text-gray-300">
+                B.Tech CSM Student
+              </span>
+            </div>
 
-            <span className="text-gray-600">•</span>
-
-            <motion.span
-              key={roleIndex}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.35 }}
-              className="text-[#00c896]"
-            >
-              {roles[roleIndex]}
-            </motion.span>
+            <TypingText />
           </div>
 
           {/* Description */}
           <p className="mt-7 max-w-2xl text-sm leading-7 text-gray-400 md:text-base md:leading-8">
-            I build modern web applications, solve problems with Java and DSA,
-            and explore AI/ML technologies to turn ideas into useful digital
-            experiences.
+            I build modern web applications, solve problems with Java and
+            DSA, and explore AI/ML technologies to turn ideas into useful
+            digital experiences.
           </p>
 
           {/* Buttons */}
@@ -131,7 +171,10 @@ function Hero() {
                 key={label}
                 className="min-w-[105px] rounded-2xl border border-[#202a28] bg-[#080d0c]/80 px-5 py-4 backdrop-blur-sm"
               >
-                <p className="text-xl font-black text-[#00c896]">{number}</p>
+                <p className="text-xl font-black text-[#00c896]">
+                  {number}
+                </p>
+
                 <p className="mt-1 text-[11px] uppercase tracking-wider text-gray-500">
                   {label}
                 </p>
@@ -199,6 +242,7 @@ function Hero() {
             <p className="text-sm font-bold text-white">
               ☕ Java + DSA
             </p>
+
             <p className="mt-1 text-xs text-gray-500">
               Problem Solving
             </p>
@@ -218,6 +262,7 @@ function Hero() {
             <p className="text-sm font-bold text-white">
               ⚡ React + Web
             </p>
+
             <p className="mt-1 text-xs text-gray-500">
               Modern Development
             </p>
